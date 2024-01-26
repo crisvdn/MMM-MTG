@@ -8,14 +8,19 @@ Module.register("MMM-MTG", {
         interval: 0,
     },
     
-    getDom: function () {
-        var imgElement = document.createElement('img');
-        if(this.commander){
-            imgElement.innerHTML = this.GetCard(commander);
-        }else{
-            imgElement.innerHTML = this.GetCard(random);
+    getDom: async function () {
+        var imgContainer = document.createElement("div");
+        if(this.imageUri){
+          if(this.debugLog){
+            console.log("imageUri: " + this.imageUri);
+          }
+          var imgElement = document.createElement("img");
+          imgElement.src = this.imageUri;
+          imgElement.style.maxHeight = this.config.sizePx;
+          imgContainer.appendChild(imgElement);
         }
-        return imgElement;
+      
+        return imgContainer;
     },
 
     getData: function () {
