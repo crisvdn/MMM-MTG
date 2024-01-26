@@ -3,17 +3,27 @@ const random = '/cards/random';
 const commander = '/cards/random?q=is%3Acommander';
 
 Module.register("MMM-MTG", {
-    default: {
-        commander: true,
-        interval: 0,
+    defaults: {
+        text: "MTG",
+        sizePx: '450px',
+        showCommandersOnly: true,
+        interval: 1,
+    },
+    imageUri: "",
+    requiresVersion: "2.25.0",
+
+    start: async function() {
+      this.getData();
+      if(this.config.interval > 0){
+        setInterval(() => {
+          this.getData();
+        }, this.config.interval * 60000);
+      }
     },
     
     getDom: async function () {
         var imgContainer = document.createElement("div");
         if(this.imageUri){
-          if(this.debugLog){
-            console.log("imageUri: " + this.imageUri);
-          }
           var imgElement = document.createElement("img");
           imgElement.src = this.imageUri;
           imgElement.style.maxHeight = this.config.sizePx;
