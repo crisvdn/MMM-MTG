@@ -18,3 +18,21 @@ module.exports = NodeHelper.create({
         }
     },
 });
+
+async function GetCard(uri, sender){
+  var imgUrl;
+  await fetch(uri).then((response) => response.json())
+  .then(data => {
+      imgUrl = data;
+  })
+  .then(() => {
+    try{
+      imgUrl.src = imgUrl.image_uris.border_crop;
+      sender.sendSocketNotification("UPDATE_CARD_DATA", imgUrl);
+    }
+    catch(error){
+      Log.error(error);
+    }
+  }
+  );
+}

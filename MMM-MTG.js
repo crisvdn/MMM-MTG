@@ -33,34 +33,22 @@ Module.register("MMM-MTG", {
         return imgContainer;
     },
 
-    getData: function () {
-        this.sendSocketNotification("GET_MTG_CARD", this.config);
-        setInterval(() => {
-          this.sendSocketNotification("GET_MTG_CARD", this.config);
-        }, this.config.interval);
-      },
+    getData: async function () {
+      if(this.config.showCommandersOnly){
+        this.sendSocketNotification("GET_MTG_CARD", api + commander);
+      }else{
+        this.sendSocketNotification("GET_MTG_CARD", api + random);  
+      }
+    },
 
-      socketNotificationReceived: function (notification, payload) {
-        switch (notification) {
-          case "UPDATE_CARD_DATA":
-            break;
-          default:
-        }
-        this.updateDom();
-      },
-});
-
-async function GetCard(uri){
-    var imgUrl;
-
-    await fetch(api + uri).then((response) => response.json())
-    .then(data => {
-        imgUrl = data;
-    })
-    .then(() => {
-        item.src = imgUrl.image_uris.normal;
-        document.body.appendChild(imgElement);
+    socketNotificationReceived: function (notification, payload) {
+      switch (notification) {
+        case "UPDATE_CARD_DATA":
+          this.imageUri = payload.src;
+          this.updateDom();
+          break;
+        default:
+          break;
+      }
     }
-    );
-    return item.src;
-}
+});
