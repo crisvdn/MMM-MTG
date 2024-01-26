@@ -3,49 +3,52 @@ const random = '/cards/random';
 const commander = '/cards/random?q=is%3Acommander';
 
 Module.register("MMM-MTG", {
-    default: {
-        commander: true,
-        interval: 0,
+    defaults: {
+        text: "MTG",
+        sizePx: '450px',
+        showCommandersOnly: true,
+        interval: 1,
+    },
+    imageUri: "",
+    requiresVersion: "2.25.0",
+
+    start: async function() {
+      this.getData();
+      if(this.config.interval > 0){
+        setInterval(() => {
+          this.getData();
+        }, this.config.interval * 60000);
+      }
     },
     
-    getDom: function () {
-        var imgElement = document.createElement('img');
-        if(this.commander){
-            imgElement.innerHTML = this.GetCard(commander);
-        }else{
-            imgElement.innerHTML = this.GetCard(random);
+    getDom: async function () {
+        var imgContainer = document.createElement("div");
+        if(this.imageUri){
+          var imgElement = document.createElement("img");
+          imgElement.src = this.imageUri;
+          imgElement.style.maxHeight = this.config.sizePx;
+          imgContainer.appendChild(imgElement);
         }
-        return imgElement;
+      
+        return imgContainer;
     },
 
-    getData: function () {
-        this.sendSocketNotification("GET_MTG_CARD", this.config);
-        setInterval(() => {
-          this.sendSocketNotification("GET_MTG_CARD", this.config);
-        }, this.config.interval);
-      },
+    getData: async function () {
+      if(this.config.showCommandersOnly){
+        this.sendSocketNotification("GET_MTG_CARD", api + commander);
+      }else{
+        this.sendSocketNotification("GET_MTG_CARD", api + random);  
+      }
+    },
 
-      socketNotificationReceived: function (notification, payload) {
-        switch (notification) {
-          case "UPDATE_CARD_DATA":
-            break;
-          default:
-        }
-        this.updateDom();
-      },
-});
-
-async function GetCard(uri){
-    var imgUrl;
-
-    await fetch(api + uri).then((response) => response.json())
-    .then(data => {
-        imgUrl = data;
-    })
-    .then(() => {
-        item.src = imgUrl.image_uris.normal;
-        document.body.appendChild(imgElement);
+    socketNotificationReceived: function (notification, payload) {
+      switch (notification) {
+        case "UPDATE_CARD_DATA":
+          this.imageUri = payload.src;
+          this.updateDom();
+          break;
+        default:
+          break;
+      }
     }
-    );
-    return item.src;
-}
+});
