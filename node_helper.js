@@ -2,20 +2,18 @@ const NodeHelper = require("node_helper");
 const Log = require("logger");
 
 module.exports = NodeHelper.create({
-
-    start: function startModule () {
+    start: function () {
         Log.info("Starting module " + this.name);
     },
-
-    socketNotificationReceived: async function (notification, payload) {
-        const self = this;
-        switch (notification) {
-          case "GET_MTG_CARD":
-
-            break;
-          default:
-            Log.error("Switch item {} is missing", notification);
-        }
+    socketNotificationReceived: function (notification, payload) {
+      Log.info("received " + notification + " : " + payload)
+      switch(notification){
+        case "GET_MTG_CARD":
+          GetCard(payload, this);
+          break;
+        default:
+          break;
+      }
     },
 });
 
