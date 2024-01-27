@@ -6,17 +6,17 @@ Module.register("MMM-MTG", {
     defaults: {
         sizePx: '450px',
         showCommandersOnly: true,
-        FetchInterval: 1,
+        fetchInterval: 1,
     },
     imageUri: "",
     requiresVersion: "2.25.0",
 
     start: async function() {
       this.getData();
-      if(this.config.FetchInterval > 0){
+      if(this.config.fetchInterval > 0){
         setInterval(() => {
           this.getData();
-        }, this.config.FetchInterval * 60000);
+        }, this.config.fetchInterval * 60000);
       }
     },
     
