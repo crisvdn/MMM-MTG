@@ -11,7 +11,7 @@ Depending on configurations, it will fetch commanders only (legendary creatures)
 ## configuration
 
 Minimal configuration
-```json
+```js
 {
     module: "MMM-MTG",
     position: "bottom_right", // location
@@ -26,7 +26,7 @@ Minimal configuration
 | sizePx | 0-X px | Max size in height (string) | `450px` |
 
 Example configuration
-```json
+```js
 {
     module: "MMM-MTG",
     position: "bottom_right", // location
