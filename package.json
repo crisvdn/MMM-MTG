@@ -1,0 +1,16 @@
+{
+  "name": "mmm-mtg",
+  "version": "1.0.0",
+  "description": "MagicMirror² module to fetch (random) MTG cards.",
+  "license": "MIT",
+  "author": "crisvdn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crisvdn/MMM-MTG"
+  },
+  "keywords": [
+    "MagicMirror",
+    "MTG",
+    "Scryfall"
+  ]
+}
