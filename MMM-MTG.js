@@ -4,20 +4,19 @@ const commander = '/cards/random?q=is%3Acommander';
 
 Module.register("MMM-MTG", {
     defaults: {
-        text: "MTG",
         sizePx: '450px',
         showCommandersOnly: true,
-        interval: 1,
+        FetchInterval: 1,
     },
     imageUri: "",
     requiresVersion: "2.25.0",
 
     start: async function() {
       this.getData();
-      if(this.config.interval > 0){
+      if(this.config.FetchInterval > 0){
         setInterval(() => {
           this.getData();
-        }, this.config.interval * 60000);
+        }, this.config.FetchInterval * 60000);
       }
     },
     
