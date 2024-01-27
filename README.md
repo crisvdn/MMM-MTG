@@ -14,6 +14,8 @@ Clone this repo to your modules directory and add the configuration.
 ```shell
 cd MagicMirror/modules
 git clone https://github.com/crisvdn/MMM-MTG.git # or secure shell link
+# optional
+cd MMM-MTG # navigate to module
 git switch -d v1.0 # check out the release u want.
 ```
 
