@@ -43,7 +43,7 @@ Example configuration
     config: {
         showCommandersOnly: false,
         fetchInterval: 10, // every 10 minutes
-        sizePx: "300px", //
+        sizePx: "300px",
     }
 },
 ```
