@@ -33,7 +33,7 @@ Example configuration
     config: {
         showCommandersOnly: false,
         FetchInterval: 10, // every 10 minutes
-        sizePx: "300px", //
+        sizePx: "300px",
     }
 },
 ```
