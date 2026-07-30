@@ -19,7 +19,12 @@ module.exports = NodeHelper.create({
 
 async function GetCard(uri, sender){
   var imgUrl;
-  await fetch(uri).then((response) => response.json())
+  await fetch(uri, {
+              headers: {
+                  "User-Agent": "MMM-MTG",
+                  "Accept": "*/*"
+              }
+  }).then((response) => response.json())
   .then(data => {
       imgUrl = data;
   })
